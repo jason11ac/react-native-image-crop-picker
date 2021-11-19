@@ -20,9 +20,9 @@
 "assets.toolbar.item-selected" = "%ld Item Selected";
 "assets.toolbar.items-selected" = "%ld Items Selected";
 
-"permission.help" = "You have given permission to a limited number of selected photos and videos.";
+"permission.help" = "You have given Popl access to only a select number of photos and videos";
 "permission.manage" = "MANAGE";
-"permission.title" = "To access all your photos in the app, give access to your full library in the device settings.";
+"permission.title" = "To access all your photos in the app, change the photo access to 'All photos' in settings";
 "permission.choose_more" = "Select More Photos";
 "permission.change_settings" = "Change Settings";
 "permission.cancel" = "Cancel";
