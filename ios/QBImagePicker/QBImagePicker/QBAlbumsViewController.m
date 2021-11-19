@@ -29,13 +29,6 @@ static bool isLimitedPermission() {
     return false;
 }
 
-static bool isDarkMode() {
-    if (@available(iOS 13.0, *)) {
-        UITraitCollection *current = UITraitCollection.currentTraitCollection;
-        return current.userInterfaceStyle == UIUserInterfaceStyleDark;
-    }
-    return false;
-}
 
 @interface QBImagePickerController (Private)
 
@@ -306,6 +299,7 @@ static bool isDarkMode() {
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
+    // return 1;
     return isLimitedPermission() ? 2 : 1;
 }
 
@@ -325,34 +319,30 @@ static bool isDarkMode() {
             UITableViewCell *cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
             cell.tag = indexPath.row;
             cell.selectionStyle = UITableViewCellSelectionStyleNone;
+            [cell setBackgroundColor:[UIColor colorWithRed: 0.97 green: 0.97 blue: 0.97 alpha: 1.00]];
+
             UIButton *manageButton = [UIButton buttonWithType:UIButtonTypeSystem];
-            if (isDarkMode()) {
-                [cell setBackgroundColor:[UIColor colorWithRed: 0.03 green: 0.03 blue: 0.03 alpha: 1.00]];
-                [manageButton setBackgroundColor:[UIColor colorWithRed: 0.13 green: 0.13 blue: 0.13 alpha: 1.00]];
-                [manageButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-            } else {
-                [cell setBackgroundColor:[UIColor colorWithRed: 0.95 green: 0.95 blue: 0.95 alpha: 1.00]];
-                [manageButton setBackgroundColor:[UIColor colorWithRed: 0.85 green: 0.85 blue: 0.85 alpha: 1.00]];
-                [manageButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-            }
+            [manageButton setBackgroundColor:[UIColor colorWithRed: 0.87 green: 0.87 blue: 0.87 alpha: 1.00]];
+            [manageButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
             [manageButton addTarget:self action:@selector(managePermissionAction:) forControlEvents:UIControlEventTouchUpInside];
             manageButton.layer.cornerRadius = 12;
             manageButton.contentEdgeInsets = UIEdgeInsetsMake(4, 12, 4, 12);
             [manageButton setTitle:NSLocalizedStringFromTableInBundle(@"permission.manage", @"QBImagePicker", self.imagePickerController.assetBundle, nil) forState:UIControlStateNormal];
             [manageButton sizeToFit];
             [cell setAccessoryView:manageButton];
-            
+
             UILabel *helpText = [[UILabel alloc] initWithFrame:CGRectMake(16,0,cell.contentView.frame.size.width - manageButton.frame.size.width + 24, frame.size.height)];
             helpText.font = [UIFont systemFontOfSize:13];
+            helpText.textColor = [UIColor blackColor];
             [helpText setNumberOfLines:2];
             helpText.text = NSLocalizedStringFromTableInBundle(@"permission.help", @"QBImagePicker", self.imagePickerController.assetBundle, nil);
-            
+
             [cell.contentView addSubview:helpText];
 
             return cell;
         }
     }
-    
+
     QBAlbumCell *cell = [tableView dequeueReusableCellWithIdentifier:@"AlbumCell" forIndexPath:indexPath];
     cell.tag = indexPath.row;
     cell.borderWidth = 1.0 / [[UIScreen mainScreen] scale];
